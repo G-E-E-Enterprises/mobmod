@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mobmod crea mobiliario modular, flexible y duradero para espacios que evolucionan contigo.">
+  <meta name="theme-color" content="#f5f2ec">
+  <title>Mobmod — Mobiliario que se adapta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #19322b;
+      --muted: #61706a;
+      --cream: #f5f2ec;
+      --paper: #fffdf9;
+      --orange: #dd6c44;
+      --sage: #dce7de;
+      --line: rgba(25, 50, 43, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.5;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 48px));
+      margin: auto;
+    }
+
+    header {
+      padding: 26px 0;
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 5;
+    }
+
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.06em;
+    }
+
+    .logo span { color: var(--orange); }
+
+    .nav-links {
+      display: flex; gap: 30px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .nav-links a:hover { color: var(--ink); }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13px 19px;
+      border-radius: 100px;
+      background: var(--ink);
+      color: white;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border: 1px solid var(--ink);
+      transition: 0.2s ease;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      background: var(--orange);
+      border-color: var(--orange);
+    }
+
+    .button.light {
+      background: transparent;
+      color: var(--ink);
+      border-color: var(--line);
+    }
+
+    .hero {
+      min-height: 720px;
+      padding: 150px 0 90px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 70px;
+      overflow: hidden;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .eyebrow:before {
+      content: "";
+      width: 34px;
+      height: 1px;
+      background: var(--orange);
+    }
+
+    h1, h2 {
+      letter-spacing: -0.055em;
+      line-height: 1.04;
+      margin: 20px 0;
+    }
+
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(3.3rem, 7vw, 6rem);
+      font-weight: 500;
+      max-width: 600px;
+    }
+
+    h2 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 500;
+    }
+
+    .hero p {
+      color: var(--muted);
+      max-width: 460px;
+      font-size: 1.1rem;
+      margin: 0 0 30px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .hero-art {
+      position: relative;
+      height: 470px;
+    }
+
+    .art-bg {
+      position: absolute;
+      inset: 28px 0 0 50px;
+      border-radius: 230px 230px 15px 15px;
+      background: #e3d9c7;
+    }
+
+    .art-card {
+      position: absolute;
+      width: 255px;
+      height: 290px;
+      right: 44px;
+      top: 68px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #cb845f, #9c5941);
+      box-shadow: 25px 30px 0 rgba(25, 50, 43, 0.1);
+      transform: rotate(6deg);
+    }
+
+    .art-card:after {
+      content: "";
+      position: absolute;
+      inset: 28px;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 4px;
+    }
+
+    .art-shelf {
+      position: absolute;
+      bottom: 50px;
+      left: 22px;
+      width: 320px;
+      height: 150px;
+      background: #e7ad72;
+      border-radius: 5px;
+      box-shadow: 0 16px 0 #c5794b;
+    }
+
+    .art-shelf:before, .art-shelf:after {
+      content: "";
+      position: absolute;
+      background: #a85f42;
+      width: 14px;
+      height: 130px;
+      bottom: -1px;
+    }
+
+    .art-shelf:before { left: 20px; }
+    .art-shelf:after { right: 20px; }
+
+    .art-plant {
+      position: absolute;
+      right: 20px;
+      bottom: 58px;
+      width: 55px;
+      height: 105px;
+      border-left: 3px solid #597461;
+      transform: rotate(-12deg);
+    }
+
+    .art-plant:before {
+      content: "✦";
+      color: #597461;
+      font-size: 65px;
+      position: absolute;
+      top: -40px;
+      left: -23px;
+    }
+
+    .number {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+    }
+
+    .section {
+      padding: 115px 0;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      align-items: end;
+      margin-bottom: 54px;
+    }
+
+    .section-head h2 {
+      max-width: 580px;
+      margin-bottom: 0;
+    }
+
+    .section-head p {
+      max-width: 310px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      padding: 28px;
+      min-height: 220px;
+      background: var(--paper);
+      border-radius: 5px;
+      border: 1px solid var(--line);
+    }
+
+    .feature:nth-child(2) { background: var(--sage); }
+    .feature:nth-child(3) { background: #f0d6c9; }
+
+    .feature-icon {
+      font-size: 1.7rem;
+      margin-bottom: 35px;
+    }
+
+    .feature h3 {
+      font-size: 1.1rem;
+      margin: 0 0 8px;
+    }
+
+    .feature p {
+      color: var(--muted);
+      font-size: 0.92rem;
+      margin: 0;
+    }
+
+    .about {
+      background: var(--ink);
+      color: #f7f5ef;
+      padding: 120px 0;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+
+    .about .eyebrow { color: #eaa27e; }
+    .about .eyebrow:before { background: #eaa27e; }
+
+    .about p {
+      color: #b7c4bd;
+      font-size: 1.05rem;
+      max-width: 450px;
+    }
+
+    .manifesto {
+      border-left: 1px solid rgba(255,255,255,0.3);
+      padding-left: 48px;
+    }
+
+    .manifesto strong {
+      display: block;
+      font-family: "Playfair Display", serif;
+      font-size: 2rem;
+      line-height: 1.15;
+      font-weight: 500;
+    }
+
+    .manifesto p {
+      font-size: 0.85rem;
+      margin-top: 22px;
+    }
+
+    .contact {
+      padding: 120px 0;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 100px;
+    }
+
+    .contact h2 { margin-top: 15px; }
+
+    .contact-intro p {
+      color: var(--muted);
+      max-width: 320px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      background: var(--paper);
+      padding: 32px;
+      border: 1px solid var(--line);
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    label.full {
+      grid-column: 1 / -1;
+    }
+
+    input, textarea {
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      padding: 11px 0;
+      font: inherit;
+      color: var(--ink);
+      background: transparent;
+      outline: none;
+    }
+
+    input:focus, textarea:focus {
+      border-color: var(--orange);
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    form .button {
+      margin-top: 8px;
+      justify-self: start;
+    }
+
+    .form-note {
+      grid-column: 1 / -1;
+      color: var(--muted);
+      font-size: 0.75rem;
+      margin: 0;
+    }
+
+    footer {
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .social {
+      display: flex;
+      gap: 20px;
+    }
+
+    .social a:hover { color: var(--orange); }
+
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 34px, 600px); }
+
+      header { padding: 20px 0; }
+      .nav-links { display: none; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 120px;
+        min-height: auto;
+        gap: 40px;
+      }
+
+      .hero-art {
+        height: 340px;
+        transform: scale(0.82);
+        transform-origin: top left;
+        width: 122%;
+      }
+
+      .section, .about, .contact { padding: 75px 0; }
+
+      .section-head, .about-grid, .contact-grid {
+        display: block;
+      }
+
+      .section-head p { margin-top: 22px; }
+
+      .features { grid-template-columns: 1fr; }
+
+      .about-grid > * + * { margin-top: 50px; }
+
+      .manifesto { padding-left: 24px; }
+
+      .contact-intro { margin-bottom: 40px; }
+
+      footer {
+        display: block;
+      }
+
+      .social {
+        margin-top: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav>
+        <a class="logo" href="#inicio">mob<span>.</span>mod</a>
+        <div class="nav-links">
+          <a href="#coleccion">Colección</a>
+          <a href="#nosotros">Nosotros</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+        <a class="button" href="#contacto">Hablemos <span>↗</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="wrap hero">
+      <div>
+        <div class="eyebrow">Diseño que evoluciona</div>
+        <h1>Espacios con más posibilidades.</h1>
+        <p>Diseñamos mobiliario modular para vivir, trabajar y crear sin límites. Piezas honestas que se adaptan a tu forma de estar.</p>
+        <div class="actions">
+          <a class="button" href="#coleccion">Descubre la colección <span>↓</span></a>
+          <a class="button light" href="#nosotros">Conócenos</a>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-label="Composición de mobiliario modular Mobmod">
+        <div class="art-bg"></div>
+        <div class="art-card"></div>
+        <div class="art-shelf"></div>
+        <div class="art-plant"></div>
+        <span class="number">01 / 03</span>
+      </div>
+    </section>
+
+    <section class="wrap section" id="coleccion">
+      <div class="section-head">
+        <h2>Menos piezas.<br>Más maneras de vivir.</h2>
+        <p>Una colección pensada para crecer contigo: combina, cambia y vuelve a empezar cuando quieras.</p>
+      </div>
+
+      <div class="features">
+        <article class="feature">
+          <div class="feature-icon">◫</div>
+          <h3>Modular por naturaleza</h3>
+          <p>Configura tu espacio hoy y transfórmalo mañana. Sin obras, sin complicaciones.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feature-icon">◒</div>
+          <h3>Materiales con criterio</h3>
+          <p>Elegimos materiales duraderos y proveedores cercanos para crear mejor, no más.</p>
+        </article>
+
+        <article class="feature">
+          <div class="feature-icon">✳</div>
+          <h3>Hecho para durar</h3>
+          <p>Diseño atemporal, detalles cuidados y piezas que resisten el ritmo de tu día a día.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="about" id="nosotros">
+      <div class="wrap about-grid">
+        <div>
+          <div class="eyebrow">Sobre mobmod</div>
+          <h2>Diseñar bien es dejar espacio.</h2>
+          <p>Somos un pequeño estudio de diseño con una gran obsesión: hacer que los espacios cotidianos funcionen mejor y se sientan más nuestros.</p>
+          <p>Creemos en el diseño cercano, en los objetos que tienen una razón de ser y en crear solo lo que puede acompañarte durante mucho tiempo.</p>
+        </div>
+
+        <div class="manifesto">
+          <strong>“Un mueble no debería decirte cómo vivir. Debería ayudarte a hacerlo.”</strong>
+          <p>— La filosofía Mobmod</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contacto">
+      <div class="wrap contact-grid">
+        <div class="contact-intro">
+          <div class="eyebrow">Hablemos</div>
+          <h2>Tu espacio empieza con una idea.</h2>
+          <p>Cuéntanos qué tienes en mente. Te responderemos pronto para explorar las posibilidades juntos.</p>
+        </div>
+
+        <form action="mailto:hola@mobmod.es" method="post" enctype="text/plain">
+          <label>
+            Nombre
+            <input name="nombre" required autocomplete="name" placeholder="Tu nombre">
+          </label>
+
+          <label>
+            Email
+            <input type="email" name="email" required autocomplete="email" placeholder="tu@email.com">
+          </label>
+
+          <label class="full">
+            Cuéntanos más
+            <textarea name="mensaje" required placeholder="¿En qué podemos ayudarte?"></textarea>
+          </label>
+
+          <p class="form-note">Al enviar se abrirá tu aplicación de correo para completar el mensaje.</p>
+          <button class="button" type="submit">Enviar mensaje <span>↗</span></button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap" style="display:flex; justify-content:space-between; width:100%;">
+      <span>© 2024 Mobmod. Diseñado para cambiar.</span>
+      <div class="social">
+        <a href="https://www.instagram.com/mobmod/" target="_blank" rel="noreferrer">Instagram ↗</a>
+        <a href="https://www.linkedin.com/company/mobmod/" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+        <a href="https://github.com/G-E-E-Enterprises/mobmod" target="_blank" rel="noreferrer">GitHub ↗</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
